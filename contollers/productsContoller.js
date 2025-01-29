@@ -47,6 +47,4 @@ const {productId,productName,productPrice,productImg,description,category} = req
     }catch(e){
         res.status(404).send({message:e.message});
     }
-
-
 }
