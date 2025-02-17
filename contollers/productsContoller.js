@@ -25,7 +25,6 @@ export const getProductsByIdController = async (req,res) => {
         if(!product){
             return res.status(404).json({message: "Product not found"})
         }
-        
         res.json(product);
     }catch(e){
         res.status(500).send({message:e.message});
