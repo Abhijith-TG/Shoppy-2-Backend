@@ -47,3 +47,37 @@ const {productId,productName,productPrice,productImg,description,category} = req
         res.status(404).send({message:e.message});
     }
 }
+
+//delete product by Id
+
+export const deleteProductsByIdController = async (req, res) => {
+    try {
+        const { id: productId } = req.params;
+        if (!productId) {
+            return res.status(400).json({ message: "Product ID is required" });
+        }
+
+        const response = await Product.findByIdAndDelete(productId);
+        if (!response) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.json({ message: "Product deleted successfully", product: response });
+    } catch (e) {
+        res.status(500).json({ message: e.message });
+    }
+};
+
+export const updateProductByIdController = async (req, res) =>{
+    try{
+        const {id:productId} = req.params;
+        const {data} = req.body;
+        if(!productId) {
+            return res.status(400).json({message: "Product ID is required"});
+        }
+        const updatedProduct = await Product.findByIdAndUpdate(productId,data,{new:true});
+        res.json({message: "Product updated successfully", updatedProduct: updatedProduct})
+    }catch(e){
+        res.status(500).send({message:e.message});
+    }
+}
